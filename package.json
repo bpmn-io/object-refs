@@ -1,0 +1,36 @@
+{
+  "name": "object-refs",
+  "version": "0.0.0",
+  "description": "Minimal bi-directional object references for JavaScript",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bpmn-io/object-refs"
+  },
+  "keywords": [
+    "object",
+    "bidirectional",
+    "references",
+    "refs",
+    "ref",
+    "property",
+    "binding"
+  ],
+  "author": {
+    "name": "Nico Rehwaldt",
+    "url": "https://github.com/Nikku"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.0",
+    "grunt-contrib-connect": "~0.6.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-jsdoc": "~0.5.1",
+    "grunt-jasmine-node": "~0.2.1",
+    "grunt-release": "^0.7.0",
+    "load-grunt-tasks": "~0.3.0"
+  }
+}
