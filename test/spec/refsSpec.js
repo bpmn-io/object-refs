@@ -1,31 +1,41 @@
 'use strict';
 
-var Refs = require('../../'),
-    hasOwnProperty = Refs.hasOwnProperty;
+var Refs = require('../../');
+
+var hasOwnProperty = require('./helper').hasOwnProperty,
+    expectArraysEqual = require('./helper').expectArraysEqual;
 
 
-function expectArraysEqual(a, b) {
-  expect(a.length).toBe(b.length);
-
-  for (var i = 0; i < a.length; i++) {
-    expect(a[i]).toEqual(b[i]);
-  }
-}
 
 
 describe('refs', function() {
 
   describe('one-to-one', function() {
 
+    var refs = Refs({ name: 'foo' }, { name: 'bar' });
+
+
+    it('should keep already set property', function() {
+
+      // given
+      var b = { };
+      var a = { foo: b };
+
+      // when
+      refs.bind(a, 'foo');
+
+      // then
+      expect(a.foo).toBe(b);
+    });
+
+
     it('should define property invisibly', function() {
 
       // given
-      var ref = Refs({ name: 'foo' }, { name: 'bar' });
-
       var a = {};
 
       // when
-      ref.bind(a, 'foo');
+      refs.bind(a, 'foo');
 
       // then
       expect(a.foo).not.toBeDefined();
@@ -36,11 +46,9 @@ describe('refs', function() {
     it('should define non-enumerable property per default', function() {
 
       // given
-      var ref = Refs({ name: 'foo' }, { name: 'bar' });
-
       var a = {};
 
-      ref.bind(a, 'foo');
+      refs.bind(a, 'foo');
       a.foo = {};
 
       // when
@@ -52,11 +60,11 @@ describe('refs', function() {
     it('should define enumerable property', function() {
 
       // given
-      var ref = Refs({ name: 'foo', enumerable: true }, { name: 'bar' });
+      var enumerableRefs = Refs({ name: 'foo', enumerable: true }, { name: 'bar' });
 
       var a = {};
 
-      ref.bind(a, 'foo');
+      enumerableRefs.bind(a, 'foo');
       a.foo = {};
 
       // when
@@ -68,12 +76,10 @@ describe('refs', function() {
     it('should create bi-directional reference', function() {
 
       // given
-      var ref = Refs({ name: 'foo' }, { name: 'bar' });
-
       var a = {}, b = {};
 
-      ref.bind(a, 'foo');
-      ref.bind(b, 'bar');
+      refs.bind(a, 'foo');
+      refs.bind(b, 'bar');
 
       // when
       a.foo = b;
@@ -87,12 +93,10 @@ describe('refs', function() {
     it('should unset property', function() {
 
       // given
-      var ref = Refs({ name: 'foo' }, { name: 'bar' });
-
       var a = {}, b = {};
 
-      ref.bind(a, 'foo');
-      ref.bind(b, 'bar');
+      refs.bind(a, 'foo');
+      refs.bind(b, 'bar');
 
       // when
       a.foo = b;
@@ -106,11 +110,9 @@ describe('refs', function() {
     it('should transitively define properties', function() {
 
       // given
-      var ref = Refs({ name: 'foo' }, { name: 'bar' });
-
       var a = {}, b = {};
 
-      ref.bind(a, 'foo');
+      refs.bind(a, 'foo');
 
       // when
       a.foo = b;
@@ -124,11 +126,9 @@ describe('refs', function() {
     it('should not allow property deletion', function() {
 
       // given
-      var ref = Refs({ name: 'foo' }, { name: 'bar' });
-
       var a = {};
 
-      ref.bind(a, 'foo');
+      refs.bind(a, 'foo');
 
       expect(function() {
         // when
@@ -141,15 +141,16 @@ describe('refs', function() {
 
   describe('one-to-many', function() {
 
+    var refs = Refs({ name: 'foos', collection: true }, { name: 'bar' });
+
+
     it('should define non-enumerable property per default', function() {
 
       // given
-      var ref = Refs({ name: 'foo', collection: true }, { name: 'bar' });
-
       var a = {};
 
-      ref.bind(a, 'foo');
-      a.foo.push({});
+      refs.bind(a, 'foos');
+      a.foos.push({});
 
       // when
       var json = JSON.stringify(a);
@@ -160,44 +161,54 @@ describe('refs', function() {
     it('should define enumerable property', function() {
 
       // given
-      var ref = Refs({ name: 'foo', enumerable: true, collection: true }, { name: 'bar' });
+      var enumerableRefs = Refs({ name: 'foos', enumerable: true, collection: true }, { name: 'bar' });
 
       var a = {};
 
-      ref.bind(a, 'foo');
-      a.foo.push({});
+      enumerableRefs.bind(a, 'foos');
+      a.foos.push({});
 
       // when
       var json = JSON.stringify(a);
-      expect(json).toBe('{"foo":[{}]}');
+      expect(json).toBe('{"foos":[{}]}');
+    });
+
+
+    it('should keep already set property', function() {
+
+      // given
+      var b = { };
+      var a = { foos: [ b ] };
+
+      // when
+      refs.bind(a, 'foos');
+
+      // then
+      expectArraysEqual(a.foos, [ b ]);
     });
 
 
     it('should define collection property as array', function() {
 
       // given
-      var ref = Refs({ name: 'foos', collection: true }, { name: 'bar' });
-
       var a = {};
 
       // when
-      ref.bind(a, 'foos');
+      refs.bind(a, 'foos');
 
       // then
       expectArraysEqual(a.foos, []);
     });
 
 
-    it('should populate collection property', function() {
+    it('should auto-populate collection', function() {
 
       // given
-      var ref = Refs({ name: 'foos', collection: true }, { name: 'bar' });
-
       var a = {};
       var b1 = {}, b2 = {};
 
-      ref.bind(b1, 'bar');
-      ref.bind(b2, 'bar');
+      refs.bind(b1, 'bar');
+      refs.bind(b2, 'bar');
 
       // when
       b1.bar = a;
@@ -208,16 +219,14 @@ describe('refs', function() {
     });
 
 
-    it('should remove from collection property', function() {
+    it('should auto-remove from collection', function() {
 
       // given
-      var ref = Refs({ name: 'foos', collection: true }, { name: 'bar' });
-
       var a = {};
       var b1 = {}, b2 = {};
 
-      ref.bind(b1, 'bar');
-      ref.bind(b2, 'bar');
+      refs.bind(b1, 'bar');
+      refs.bind(b2, 'bar');
 
       b1.bar = a;
       b2.bar = a;
@@ -229,10 +238,115 @@ describe('refs', function() {
       expectArraysEqual(a.foos, [ b2 ]);
     });
 
+
+    it('should transitively define properties', function() {
+
+      // given
+      var a = {}, b = {};
+
+      refs.bind(a, 'foos');
+
+      // when
+      a.foos.add(b);
+      b.bar = null;
+
+      // then
+      expectArraysEqual(a.foos, []);
+    });
+
   });
 
 
-  xdescribe('many-to-many', function() {
+  describe('many-to-many', function() {
 
+    var refs = Refs({ name: 'foos', collection: true }, { name: 'bars', collection: true });
+
+
+    it('should define property invisibly', function() {
+      // given
+      var b = {};
+
+      // when
+      refs.bind(b, 'bars');
+
+      // then
+      expectArraysEqual(b.bars, []);
+    });
+
+
+    it('should inverse add', function() {
+      // given
+      var a = {}, b = {};
+
+      refs.bind(a, 'foos');
+      refs.bind(b, 'bars');
+
+      // when
+      a.foos.add(b);
+
+      // then
+      expectArraysEqual(b.bars, [ a ]);
+    });
+
+
+    it('should add many-to-many', function() {
+      // given
+      var a1 = {}, a2 = {},
+          b1 = {}, b2 = {};
+
+      refs.bind(a1, 'foos');
+      refs.bind(a2, 'foos');
+
+      // when
+      a1.foos.add(b1);
+      a1.foos.add(b2);
+
+      a2.foos.add(b2);
+
+      // then
+      expect(b2.bars.contains(a2)).toBe(true);
+
+      expectArraysEqual(b1.bars, [ a1 ]);
+      expectArraysEqual(b2.bars, [ a1, a2 ]);
+    });
+
+
+    it('should inverse remove', function() {
+      // given
+      var a1 = {}, a2 = {},
+          b1 = {}, b2 = {};
+
+      refs.bind(a1, 'foos');
+      refs.bind(a2, 'foos');
+
+      // when
+      a1.foos.add(b1);
+      a1.foos.add(b2);
+
+      a2.foos.add(b2);
+
+      b2.bars.remove(a1);
+
+      // then
+      expectArraysEqual(b1.bars, [ a1 ]);
+      expectArraysEqual(b2.bars, [ a2 ]);
+    });
+
+
+    it('should transitively define properties', function() {
+
+      // given
+      var a = {}, b = {};
+
+      refs.bind(a, 'foos');
+
+      // when
+      a.foos.add(b);
+      b.bars.remove(a);
+
+      // then
+      expectArraysEqual(a.foos, []);
+      expectArraysEqual(b.bars, []);
+    });
   });
 });

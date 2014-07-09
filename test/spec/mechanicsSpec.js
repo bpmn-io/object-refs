@@ -1,8 +1,6 @@
 'use strict';
 
-var Refs = require('../../');
-
-var hasOwnProperty = Refs.hasOwnProperty;
+var hasOwnProperty = require('./helper').hasOwnProperty;
 
 
 describe('Object.defineProperty mechanics', function() {
