@@ -1,6 +1,6 @@
 {
   "name": "object-refs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Minimal bi-directional object references for JavaScript",
   "scripts": {
     "test": "grunt test"
