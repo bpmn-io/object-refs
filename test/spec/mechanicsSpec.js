@@ -1,6 +1,6 @@
 'use strict';
 
-var hasOwnProperty = require('./helper').hasOwnProperty;
+var hasProperty = require('./helper').hasProperty;
 
 
 describe('Object.defineProperty mechanics', function() {
@@ -16,8 +16,8 @@ describe('Object.defineProperty mechanics', function() {
     });
 
     // then
-    expect(a.value).not.toBeDefined();
-    expect(hasOwnProperty(a, 'foo')).toBe(true);
+    expect(a.value).not.to.exist;
+    expect(hasProperty(a, 'foo')).to.equal(true);
   });
 
 
@@ -35,7 +35,7 @@ describe('Object.defineProperty mechanics', function() {
     delete a.foo;
 
     // then
-    expect(hasOwnProperty(a, 'foo')).toBe(false);
+    expect(hasProperty(a, 'foo')).to.equal(false);
   });
 
 });

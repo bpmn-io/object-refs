@@ -2,7 +2,7 @@
 
 var Refs = require('../../');
 
-var hasOwnProperty = require('./helper').hasOwnProperty,
+var hasProperty = require('./helper').hasProperty,
     expectArraysEqual = require('./helper').expectArraysEqual;
 
 
@@ -12,7 +12,7 @@ describe('refs', function() {
 
   describe('one-to-one', function() {
 
-    var refs = Refs({ name: 'foo' }, { name: 'bar' });
+    var refs = new Refs({ name: 'foo' }, { name: 'bar' });
 
 
     it('should keep already set property', function() {
@@ -25,7 +25,7 @@ describe('refs', function() {
       refs.bind(a, 'foo');
 
       // then
-      expect(a.foo).toBe(b);
+      expect(a.foo).to.equal(b);
     });
 
 
@@ -38,8 +38,8 @@ describe('refs', function() {
       refs.bind(a, 'foo');
 
       // then
-      expect(a.foo).not.toBeDefined();
-      expect(hasOwnProperty(a, 'foo')).toBe(true);
+      expect(a.foo).not.to.exist;
+      expect(hasProperty(a, 'foo')).to.equal(true);
     });
 
 
@@ -53,14 +53,14 @@ describe('refs', function() {
 
       // when
       var json = JSON.stringify(a);
-      expect(json).toBe('{}');
+      expect(json).to.equal('{}');
     });
 
 
     it('should define enumerable property', function() {
 
       // given
-      var enumerableRefs = Refs({ name: 'foo', enumerable: true }, { name: 'bar' });
+      var enumerableRefs = new Refs({ name: 'foo', enumerable: true }, { name: 'bar' });
 
       var a = {};
 
@@ -69,7 +69,7 @@ describe('refs', function() {
 
       // when
       var json = JSON.stringify(a);
-      expect(json).toBe('{"foo":{}}');
+      expect(json).to.equal('{"foo":{}}');
     });
 
 
@@ -85,8 +85,8 @@ describe('refs', function() {
       a.foo = b;
 
       // then
-      expect(a.foo).toBe(b);
-      expect(b.bar).toBe(a);
+      expect(a.foo).to.equal(b);
+      expect(b.bar).to.equal(a);
     });
 
 
@@ -102,8 +102,8 @@ describe('refs', function() {
       a.foo = b;
       a.foo = null;
 
-      expect(a.foo).toBe(null);
-      expect(b.bar).toBe(undefined);
+      expect(a.foo).to.equal(null);
+      expect(b.bar).to.equal(undefined);
     });
 
 
@@ -119,7 +119,7 @@ describe('refs', function() {
       b.bar = null;
 
       // then
-      expect(a.foo).toBe(undefined);
+      expect(a.foo).to.equal(undefined);
     });
 
 
@@ -133,7 +133,7 @@ describe('refs', function() {
       expect(function() {
         // when
         delete a.foo;
-      }).toThrow('Cannot delete property \'foo\' of #<Object>');
+      }).to.throw('Cannot delete property \'foo\' of #<Object>');
     });
 
   });
@@ -141,7 +141,7 @@ describe('refs', function() {
 
   describe('one-to-many', function() {
 
-    var refs = Refs({ name: 'foos', collection: true }, { name: 'bar' });
+    var refs = new Refs({ name: 'foos', collection: true }, { name: 'bar' });
 
 
     it('should define non-enumerable property per default', function() {
@@ -154,14 +154,14 @@ describe('refs', function() {
 
       // when
       var json = JSON.stringify(a);
-      expect(json).toBe('{}');
+      expect(json).to.equal('{}');
     });
 
 
     it('should define enumerable property', function() {
 
       // given
-      var enumerableRefs = Refs({ name: 'foos', enumerable: true, collection: true }, { name: 'bar' });
+      var enumerableRefs = new Refs({ name: 'foos', enumerable: true, collection: true }, { name: 'bar' });
 
       var a = {};
 
@@ -170,7 +170,7 @@ describe('refs', function() {
 
       // when
       var json = JSON.stringify(a);
-      expect(json).toBe('{"foos":[{}]}');
+      expect(json).to.equal('{"foos":[{}]}');
     });
 
 
@@ -259,7 +259,7 @@ describe('refs', function() {
 
   describe('many-to-many', function() {
 
-    var refs = Refs({ name: 'foos', collection: true }, { name: 'bars', collection: true });
+    var refs = new Refs({ name: 'foos', collection: true }, { name: 'bars', collection: true });
 
 
     it('should define property invisibly', function() {
@@ -304,7 +304,7 @@ describe('refs', function() {
       a2.foos.add(b2);
 
       // then
-      expect(b2.bars.contains(a2)).toBe(true);
+      expect(b2.bars.contains(a2)).to.equal(true);
 
       expectArraysEqual(b1.bars, [ a1 ]);
       expectArraysEqual(b2.bars, [ a1, a2 ]);

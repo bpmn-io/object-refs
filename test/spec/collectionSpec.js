@@ -2,13 +2,12 @@
 
 var Refs = require('../../');
 
-var hasOwnProperty = require('./helper').hasOwnProperty,
-    expectArraysEqual = require('./helper').expectArraysEqual;
+var expectArraysEqual = require('./helper').expectArraysEqual;
 
 
 describe('collection api', function() {
 
-  var refs = Refs({ name: 'foos', collection: true }, { name: 'bar' });
+  var refs = new Refs({ name: 'foos', collection: true }, { name: 'bar' });
 
 
   describe('#contains', function() {
@@ -22,7 +21,7 @@ describe('collection api', function() {
       refs.bind(a, 'foos');
 
       // then
-      expect(a.foos.contains({})).toBe(false);
+      expect(a.foos.contains({})).to.equal(false);
     });
 
 
@@ -35,7 +34,7 @@ describe('collection api', function() {
       refs.bind(a, 'foos');
 
       // then
-      expect(a.foos.contains(b)).toBe(true);
+      expect(a.foos.contains(b)).to.equal(true);
     });
 
   });
@@ -55,7 +54,7 @@ describe('collection api', function() {
       a.foos.add(b);
 
       // then
-      expect(a.foos.contains(b)).toBe(true);
+      expect(a.foos.contains(b)).to.equal(true);
     });
 
 
@@ -71,7 +70,7 @@ describe('collection api', function() {
       a.foos.add(b);
 
       // then
-      expect(b.bar).toBe(a);
+      expect(b.bar).to.equal(a);
     });
 
   });
@@ -92,7 +91,7 @@ describe('collection api', function() {
 
       // then
       expectArraysEqual(a.foos, [ ]);
-      expect(b.bar).toBe(undefined);
+      expect(b.bar).not.to.exist;
 
     });
 

@@ -12,11 +12,13 @@ function trace(fn) {
 
 describe('performance characteristics', function() {
 
-  return;
+  if (true) {
+    return;
+  }
 
   it('refs access', function() {
 
-    var refs = Refs({ name: 'foos', collection: true }, { name: 'bar' });
+    var refs = new Refs({ name: 'foos', collection: true }, { name: 'bar' });
 
     var foos = [];
 
