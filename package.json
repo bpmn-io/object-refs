@@ -1,6 +1,6 @@
 {
   "name": "object-refs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Minimal bi-directional object references for JavaScript",
   "scripts": {
     "test": "grunt test"
@@ -31,7 +31,7 @@
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-jsdoc": "~0.5.1",
     "grunt-mocha-test": "^0.11.0",
-    "grunt-release": "^0.7.0",
+    "grunt-release": "^0.13.0",
     "load-grunt-tasks": "~0.3.0"
   }
 }
