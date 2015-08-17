@@ -2,8 +2,7 @@
 
 var Refs = require('../../');
 
-var hasProperty = require('./helper').hasProperty,
-    expectArraysEqual = require('./helper').expectArraysEqual;
+var hasProperty = require('./has-property');
 
 
 
@@ -184,7 +183,7 @@ describe('refs', function() {
       refs.bind(a, 'foos');
 
       // then
-      expectArraysEqual(a.foos, [ b ]);
+      expect(a.foos).to.eql([ b ]);
     });
 
 
@@ -197,7 +196,7 @@ describe('refs', function() {
       refs.bind(a, 'foos');
 
       // then
-      expectArraysEqual(a.foos, []);
+      expect(a.foos).to.eql([]);
     });
 
 
@@ -215,7 +214,7 @@ describe('refs', function() {
       b2.bar = a;
 
       // then
-      expectArraysEqual(a.foos, [ b1, b2 ]);
+      expect(a.foos).to.eql([ b1, b2 ]);
     });
 
 
@@ -235,7 +234,7 @@ describe('refs', function() {
       b1.bar = null;
 
       // then
-      expectArraysEqual(a.foos, [ b2 ]);
+      expect(a.foos).to.eql([ b2 ]);
     });
 
 
@@ -251,7 +250,7 @@ describe('refs', function() {
       b.bar = null;
 
       // then
-      expectArraysEqual(a.foos, []);
+      expect(a.foos).to.eql([]);
     });
 
   });
@@ -270,7 +269,7 @@ describe('refs', function() {
       refs.bind(b, 'bars');
 
       // then
-      expectArraysEqual(b.bars, []);
+      expect(b.bars).to.eql([]);
     });
 
 
@@ -285,7 +284,7 @@ describe('refs', function() {
       a.foos.add(b);
 
       // then
-      expectArraysEqual(b.bars, [ a ]);
+      expect(b.bars).to.eql([ a ]);
     });
 
 
@@ -306,8 +305,8 @@ describe('refs', function() {
       // then
       expect(b2.bars.contains(a2)).to.equal(true);
 
-      expectArraysEqual(b1.bars, [ a1 ]);
-      expectArraysEqual(b2.bars, [ a1, a2 ]);
+      expect(b1.bars).to.eql([ a1 ]);
+      expect(b2.bars).to.eql([ a1, a2 ]);
     });
 
 
@@ -328,8 +327,8 @@ describe('refs', function() {
       b2.bars.remove(a1);
 
       // then
-      expectArraysEqual(b1.bars, [ a1 ]);
-      expectArraysEqual(b2.bars, [ a2 ]);
+      expect(b1.bars).to.eql([ a1 ]);
+      expect(b2.bars).to.eql([ a2 ]);
     });
 
 
@@ -345,8 +344,8 @@ describe('refs', function() {
       b.bars.remove(a);
 
       // then
-      expectArraysEqual(a.foos, []);
-      expectArraysEqual(b.bars, []);
+      expect(a.foos).to.eql([]);
+      expect(b.bars).to.eql([]);
     });
   });
 });

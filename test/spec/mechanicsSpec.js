@@ -1,6 +1,6 @@
 'use strict';
 
-var hasProperty = require('./helper').hasProperty;
+var hasProperty = require('./has-property');
 
 
 describe('Object.defineProperty mechanics', function() {

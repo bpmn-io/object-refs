@@ -2,8 +2,6 @@
 
 var Refs = require('../../');
 
-var expectArraysEqual = require('./helper').expectArraysEqual;
-
 
 describe('collection api', function() {
 
@@ -90,7 +88,7 @@ describe('collection api', function() {
       a.foos.remove(b);
 
       // then
-      expectArraysEqual(a.foos, [ ]);
+      expect(a.foos).to.eql([ ]);
       expect(b.bar).not.to.exist;
 
     });
