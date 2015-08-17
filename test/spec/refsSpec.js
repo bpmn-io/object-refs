@@ -238,7 +238,7 @@ describe('refs', function() {
     });
 
 
-    it('should transitively define properties', function() {
+    it('should transitively bind one property', function() {
 
       // given
       var a = {}, b = {};
@@ -251,6 +251,22 @@ describe('refs', function() {
 
       // then
       expect(a.foos).to.eql([]);
+    });
+
+
+    it('should transitively bind many property', function() {
+
+      // given
+      var b = { };
+      var a = { foos: [ 'a' ] };
+
+      refs.bind(b, 'bar');
+
+      // when
+      b.bar = a;
+
+      // then
+      expect(a.foos).to.eql([ 'a', b ]);
     });
 
   });
