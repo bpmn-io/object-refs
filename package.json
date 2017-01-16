@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "Minimal bi-directional object references for JavaScript",
   "scripts": {
+    "dev": "grunt auto-test",
     "test": "grunt test"
   },
   "repository": {
