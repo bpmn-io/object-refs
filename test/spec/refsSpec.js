@@ -258,7 +258,8 @@ describe('refs', function() {
 
       // given
       var b = { };
-      var a = { foos: [ 'a' ] };
+      var c = { };
+      var a = { foos: [ c ] };
 
       refs.bind(b, 'bar');
 
@@ -266,7 +267,25 @@ describe('refs', function() {
       b.bar = a;
 
       // then
-      expect(a.foos).to.eql([ 'a', b ]);
+      expect(a.foos).to.eql([ c, b ]);
+    });
+
+
+    it('should transitively bind many-to-one inverse reference', function() {
+
+      // given
+      var b = { };
+      var c = { }
+      var a = { foos: [ b, c ] };
+
+      // when
+      refs.bind(a, 'foos');
+
+      // then
+      expect(b.bar).to.eql(a);
+      expect(c.bar).to.eql(a);
+
+      expect(a.foos).to.eql([ b, c ]);
     });
 
   });
