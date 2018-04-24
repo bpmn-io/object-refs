@@ -72,6 +72,63 @@ describe('refs', function() {
     });
 
 
+    it('should define non-configurable property per default', function() {
+
+      // given
+      var refs = new Refs({ name: 'foo' }, { name: 'bar' });
+
+      var a = {};
+
+      refs.bind(a, 'foo');
+      a.foo = {};
+
+      // when
+      expect(function() {
+        delete a.foo;
+      }).to.throw;
+    });
+
+
+    it('should define configurable property', function() {
+
+      // given
+      var configurableRefs = new Refs(
+        { name: 'foo', configurable: true },
+        { name: 'bar' }
+      );
+
+      var a = {};
+
+      configurableRefs.bind(a, 'foo');
+      a.foo = {};
+
+      // when
+      delete a.foo;
+
+      expect(a.foo).to.not.exist;
+    });
+
+
+    it('should create bi-directional configurable property', function() {
+
+      // given
+      var configurableRefs = new Refs(
+        { name: 'foo', configurable: true },
+        { name: 'bar', configurable: true }
+      );
+
+      var a = {};
+
+      configurableRefs.bind(a, 'foo');
+      a.foo = {};
+
+      // when
+      delete a.foo.bar;
+
+      expect(a.foo.bar).to.not.exist;
+    });
+
+
     it('should create bi-directional reference', function() {
 
       // given
