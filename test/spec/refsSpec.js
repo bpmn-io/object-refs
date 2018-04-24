@@ -1,10 +1,10 @@
 'use strict';
 
+var expect = require('chai').expect;
+
 var Refs = require('../../');
 
 var hasProperty = require('./has-property');
-
-
 
 
 describe('refs', function() {
@@ -332,7 +332,7 @@ describe('refs', function() {
 
       // given
       var b = { };
-      var c = { }
+      var c = { };
       var a = { foos: [ b, c ] };
 
       // when

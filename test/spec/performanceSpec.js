@@ -10,11 +10,8 @@ function trace(fn) {
   return Date.now() - time;
 }
 
-describe('performance characteristics', function() {
 
-  if (true) {
-    return;
-  }
+describe.skip('performance characteristics', function() {
 
   it('refs access', function() {
 

@@ -1,5 +1,7 @@
 'use strict';
 
+var expect = require('chai').expect;
+
 var hasProperty = require('./has-property');
 
 
