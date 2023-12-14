@@ -1,8 +1,8 @@
-'use strict';
+import { Refs } from '../../dist/index.esm.js';
 
-var expect = require('chai').expect;
+import chai from 'chai';
 
-var Refs = require('../../');
+const { expect } = chai;
 
 
 describe('collection api', function() {
