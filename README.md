@@ -1,6 +1,6 @@
 # object-refs
 
-[![Build Status](https://travis-ci.com/bpmn-io/object-refs.svg?branch=master)](https://travis-ci.com/bpmn-io/object-refs)
+[![CI](https://github.com/bpmn-io/object-refs/actions/workflows/CI.yml/badge.svg)](https://github.com/bpmn-io/object-refs/actions/workflows/CI.yml)
 
 A minimal implementation of bi-directional object references for JavaScript.
 
