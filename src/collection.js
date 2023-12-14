@@ -1,20 +1,10 @@
 /**
- * An empty collection stub. Use {@link RefsCollection.extend} to extend a
- * collection with ref semantics.
- *
- * @class RefsCollection
- */
-
-/**
  * Extends a collection with {@link Refs} aware methods
  *
- * @memberof RefsCollection
- * @static
- *
- * @param  {Array<Object>} collection
- * @param  {Refs} refs instance
- * @param  {Object} property represented by the collection
- * @param  {Object} target object the collection is attached to
+ * @param {Array<Object>} collection
+ * @param {Refs} refs instance
+ * @param {Object} property represented by the collection
+ * @param {Object} target object the collection is attached to
  *
  * @return {RefsCollection<Object>} the extended array
  */
@@ -111,6 +101,13 @@ export function extend(collection, refs, property, target) {
 }
 
 
+/**
+ * Checks if a given collection is extended
+ *
+ * @param {Array<Object>} collection
+ *
+ * @return {boolean}
+ */
 export function isExtended(collection) {
   return collection.__refs_collection === true;
 }
