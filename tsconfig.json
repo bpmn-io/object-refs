@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "lib": [
+      "ES2018"
+    ],
+    "strict": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "./dist/*.d.ts",
+    "./test/spec/**/*.ts"
+  ]
+}
