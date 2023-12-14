@@ -187,6 +187,7 @@ describe('refs', function() {
       refs.bind(a, 'foo');
 
       expect(function() {
+
         // when
         delete a.foo;
       }).to.throw('Cannot delete property \'foo\' of #<Object>');
@@ -354,6 +355,7 @@ describe('refs', function() {
 
 
     it('should define property invisibly', function() {
+
       // given
       var b = {};
 
@@ -366,6 +368,7 @@ describe('refs', function() {
 
 
     it('should inverse add', function() {
+
       // given
       var a = {}, b = {};
 
@@ -381,6 +384,7 @@ describe('refs', function() {
 
 
     it('should add many-to-many', function() {
+
       // given
       var a1 = {}, a2 = {},
           b1 = {}, b2 = {};
@@ -403,6 +407,7 @@ describe('refs', function() {
 
 
     it('should inverse remove', function() {
+
       // given
       var a1 = {}, a2 = {},
           b1 = {}, b2 = {};
