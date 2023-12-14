@@ -1,6 +1,6 @@
 {
   "name": "object-refs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Minimal bi-directional object references for JavaScript",
   "scripts": {
     "all": "run-s lint lint:types bundle test",
