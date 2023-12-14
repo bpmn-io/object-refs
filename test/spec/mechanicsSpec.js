@@ -1,8 +1,8 @@
-'use strict';
+import hasProperty from './has-property.js';
 
-var expect = require('chai').expect;
+import chai from 'chai';
 
-var hasProperty = require('./has-property');
+const { expect } = chai;
 
 
 describe('Object.defineProperty mechanics', function() {

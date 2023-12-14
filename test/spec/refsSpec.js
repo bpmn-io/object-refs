@@ -1,10 +1,10 @@
-'use strict';
+import { Refs } from '../../dist/index.js';
 
-var expect = require('chai').expect;
+import hasProperty from './has-property.js';
 
-var Refs = require('../../');
+import chai from 'chai';
 
-var hasProperty = require('./has-property');
+const { expect } = chai;
 
 
 describe('refs', function() {

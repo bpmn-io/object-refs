@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * An empty collection stub. Use {@link RefsCollection.extend} to extend a
  * collection with ref semantics.
@@ -20,7 +18,7 @@
  *
  * @return {RefsCollection<Object>} the extended array
  */
-function extend(collection, refs, property, target) {
+export function extend(collection, refs, property, target) {
 
   var inverseProperty = property.inverse;
 
@@ -113,10 +111,6 @@ function extend(collection, refs, property, target) {
 }
 
 
-function isExtended(collection) {
+export function isExtended(collection) {
   return collection.__refs_collection === true;
 }
-
-module.exports.extend = extend;
-
-module.exports.isExtended = isExtended;

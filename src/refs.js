@@ -1,6 +1,7 @@
-'use strict';
-
-var Collection = require('./collection');
+import {
+  extend as extendCollection,
+  isExtended as isCollectionExtended
+} from './collection';
 
 function hasOwnProperty(e, property) {
   return Object.prototype.hasOwnProperty.call(e, property.name || property);
@@ -8,7 +9,7 @@ function hasOwnProperty(e, property) {
 
 function defineCollectionProperty(ref, property, target) {
 
-  var collection = Collection.extend(target[property.name] || [], ref, property, target);
+  var collection = extendCollection(target[property.name] || [], ref, property, target);
 
   Object.defineProperty(target, property.name, {
     enumerable: property.enumerable,
@@ -107,7 +108,7 @@ function defineProperty(ref, property, target) {
  *
  * wheels[0].car // undefined
  */
-function Refs(a, b) {
+export default function Refs(a, b) {
 
   if (!(this instanceof Refs)) {
     return new Refs(a, b);
@@ -150,7 +151,7 @@ Refs.prototype.ensureRefsCollection = function(target, property) {
 
   var collection = target[property.name];
 
-  if (!Collection.isExtended(collection)) {
+  if (!isCollectionExtended(collection)) {
     defineCollectionProperty(this, property, target);
   }
 
@@ -188,8 +189,6 @@ Refs.prototype.set = function(target, property, value) {
     }
   }
 };
-
-module.exports = Refs;
 
 
 /**

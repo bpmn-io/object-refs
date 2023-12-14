@@ -1,6 +1,5 @@
-'use strict';
+import { Refs } from '../../dist/index.js';
 
-var Refs = require('../../');
 
 function trace(fn) {
   var time = Date.now();
