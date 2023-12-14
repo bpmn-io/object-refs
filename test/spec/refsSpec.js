@@ -1,4 +1,4 @@
-import { Refs } from '../../dist/index.esm.js';
+import { Refs } from '../../dist/index.js';
 
 import hasProperty from './has-property.js';
 

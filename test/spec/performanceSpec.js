@@ -1,4 +1,4 @@
-import { Refs } from '../../dist/index.esm.js';
+import { Refs } from '../../dist/index.js';
 
 
 function trace(fn) {
